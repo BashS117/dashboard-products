@@ -2,6 +2,7 @@
   import useFetch from "@/hooks/useFetch";
   import Paginate from "@/hooks/usePaginate";
   import Pagination from "@/components/Pagination";
+  import { Chart } from "@/common/Chart";
   
   const PRODUCT_LIMIT= 5;
   const PRODUCT_OFFSET =0;
@@ -9,6 +10,15 @@
   export default function Dashboard() {
   const allproducts = useFetch(endPoints.products.getProducts(0, 0));
   const totalProducts = allproducts.length;
+
+  const categoryNames = allproducts?.map((product)=>product.category);
+  const categoryCount = categoryNames?.map((category)=>category.name);
+  console.log(categoryNames);
+
+  console.log(categoryCount);
+
+  const countOcurrences = (arr)=>arr.reduce((prev, curr)=>((prev[curr]=++prev[curr]||1), prev),{});
+
 
 
   //LOGICA PAGINATION
@@ -20,9 +30,18 @@
   console.log(products);
 
   //LOGICA CHART
-  
+  const data= {
+    datasets: [{
+      label:"Categories",
+      data:countOcurrences(categoryCount),
+      borderWidth: 2,
+      backgrondColor: ['#ffbb11', '#c0c0c0', '#50AF95','#f3ba2f','#2a71d0'],
+
+    }]
+  }
     return (
       <>
+      <Chart className="mb-8 mt-2" chartData={data}/>
         <div className="flex flex-col">
           <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">

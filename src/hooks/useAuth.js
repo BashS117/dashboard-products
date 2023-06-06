@@ -45,8 +45,18 @@ function useProviderAuth(){
         }
     };
 
+    /// logout
+
+    const logout=()=>{
+        Cookie.remove('token');
+        setUser(null);
+        delete axios.defaults.headers.Authorization;
+        window.location.href= '/login';
+    }
+
     return {
         user, 
+        logout,
         signIn
     };
 }

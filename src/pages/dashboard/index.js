@@ -3,6 +3,7 @@
   import Paginate from "@/hooks/usePaginate";
   import Pagination from "@/components/Pagination";
   import { Chart } from "@/common/Chart";
+  import Image from "next/image";
   
   const PRODUCT_LIMIT= 5;
   const PRODUCT_OFFSET =0;
@@ -75,7 +76,7 @@
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10">
-                              <img className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
+                              <Image className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
                             </div>
                             <div className="ml-4">
                               <div className="text-sm font-medium text-gray-900">{product.title}</div>

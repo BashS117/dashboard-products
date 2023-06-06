@@ -2,11 +2,14 @@ import { LockClosedIcon } from '@heroicons/react/solid';
 import { useRef } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import Swal from 'sweetalert2';
+import { useRouter } from 'next/router';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const auth = useAuth();
+  const router = useRouter();
 
   const submitHandler=(event)=>{
     event.preventDefault();
@@ -14,8 +17,10 @@ export default function LoginPage() {
     const password = passwordRef.current.value;
 
     console.log(email,password);
+    
     auth.signIn(email,password).then(()=>{
       console.log('loginsuccces');
+      router.push('/dashboard');
     }).catch(()=>{
       Swal.fire({
         title: "Error",
@@ -34,7 +39,7 @@ export default function LoginPage() {
       <div className="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8">
           <div>
-            <img className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
+            <Image className="mx-auto h-12 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg" alt="Workflow" />
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Sign in to your account</h2>
           </div>
             <form className="mt-8 space-y-6" onSubmit={submitHandler}>

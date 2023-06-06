@@ -10,6 +10,7 @@ import Alert from "@/common/Alert";
 import { deleteProduct } from "../api/product";
 import {XCircleIcon} from "@heroicons/react/solid";
 import Link from "next/link";
+import Image from "next/image";
 
 
 
@@ -110,7 +111,7 @@ try{
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
-                            <img className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
+                            <Image className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{product.title}</div>

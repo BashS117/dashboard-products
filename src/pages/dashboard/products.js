@@ -1,19 +1,40 @@
 import { PlusIcon } from "@heroicons/react/solid"
-import { useState } from "react";
-import { Fragment } from 'react';
+import { useState,useEffect } from "react";
+// import { Fragment } from 'react';
 import Modal from "@/common/Modal";
 import FormProduct from "@/components/FormProduct";
+import axios from "axios";
+import endPoints from "../api";
+import useAlert from "@/hooks/useAlert";
+import Alert from "@/common/Alert";
 
 
 
-export default function products() {
+export default function Products() {
 
   const [products, setProducts] = useState([]);
 
   const [open,setOpen]=useState(false);
 
+  const {alert,setAlert,toggleAlert}=useAlert();
+
+  useEffect(()=>{
+    async function getProducts(){
+      const response = await axios.get(endPoints.products.allproducts);
+      setProducts(response.data)
+    }
+try{
+  getProducts();
+}catch(error){
+  console.log(error)
+}
+  },[alert] );
+
+
   return (
     <>
+
+    <Alert alert={alert} handleClose={toggleAlert}/>
 
       <div className="lg:flex lg:items-center lg:justify-between mb-8">
         <div className="min-w-0 flex-1">
@@ -112,7 +133,9 @@ export default function products() {
       <Modal 
       open={open}
       setOpen={setOpen}>
-        <FormProduct/>
+        <FormProduct 
+        setOpen={setOpen}
+        setAlert={setAlert}/>
       </Modal>
     </>
   );

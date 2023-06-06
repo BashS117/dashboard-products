@@ -3,23 +3,36 @@ import { useRef } from "react";
 import { addProduct } from "@/pages/api/product";
 
 
-export default function FormProduct() {
-    const formRef = useRef(null);
-    const handleSubmit= (event)=>{
-        event.preventDefault();
-        const formData = new FormData(formRef.current);
-        const data = {
-          title: formData.get('title'),
-          price: parseInt(formData.get('price')),
-          description: formData.get('description'),
-          categoryId: parseInt(formData.get('category')),
-          images:[formData.get('images').name],
-        };
-        
-        addProduct(data).then((response)=>{
-          console.log(response);
-        })
+export default function FormProduct({setOpen, setAlert}) {
+  const formRef = useRef(null);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(formRef.current);
+    const data = {
+      title: formData.get('title'),
+      price: parseInt(formData.get('price')),
+      description: formData.get('description'),
+      categoryId: parseInt(formData.get('category')),
+      images: [formData.get('images').name],
     };
+
+    addProduct(data).then(() => {
+      setAlert({
+        active: true,
+        message: 'Product added successfully',
+        type: 'success',
+        autoClose: false,
+      });
+      setOpen(false);
+    }).catch((error) => {
+      setAlert({
+        active: true,
+        message: error.message,
+        type: 'error',
+        autoClose: false,
+      })
+    })
+  };
 
 
 
